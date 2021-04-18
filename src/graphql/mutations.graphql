@@ -1,0 +1,304 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateEvent(
+  $input: CreateEventInput!
+  $condition: ModelEventConditionInput
+) {
+  createEvent(input: $input, condition: $condition) {
+    id
+    name
+    type
+    venue
+    hostName
+    startDt
+    endDt
+    limit
+    description
+    participants {
+      items {
+        id
+        eventId
+        userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateEvent(
+  $input: UpdateEventInput!
+  $condition: ModelEventConditionInput
+) {
+  updateEvent(input: $input, condition: $condition) {
+    id
+    name
+    type
+    venue
+    hostName
+    startDt
+    endDt
+    limit
+    description
+    participants {
+      items {
+        id
+        eventId
+        userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteEvent(
+  $input: DeleteEventInput!
+  $condition: ModelEventConditionInput
+) {
+  deleteEvent(input: $input, condition: $condition) {
+    id
+    name
+    type
+    venue
+    hostName
+    startDt
+    endDt
+    limit
+    description
+    participants {
+      items {
+        id
+        eventId
+        userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateEventParticipant(
+  $input: CreateEventParticipantInput!
+  $condition: ModelEventParticipantConditionInput
+) {
+  createEventParticipant(input: $input, condition: $condition) {
+    id
+    eventId
+    event {
+      id
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    userName
+    comments {
+      items {
+        id
+        eventParticipantId
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateEventParticipant(
+  $input: UpdateEventParticipantInput!
+  $condition: ModelEventParticipantConditionInput
+) {
+  updateEventParticipant(input: $input, condition: $condition) {
+    id
+    eventId
+    event {
+      id
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    userName
+    comments {
+      items {
+        id
+        eventParticipantId
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteEventParticipant(
+  $input: DeleteEventParticipantInput!
+  $condition: ModelEventParticipantConditionInput
+) {
+  deleteEventParticipant(input: $input, condition: $condition) {
+    id
+    eventId
+    event {
+      id
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    userName
+    comments {
+      items {
+        id
+        eventParticipantId
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateComment(
+  $input: CreateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  createComment(input: $input, condition: $condition) {
+    id
+    eventParticipantId
+    eventParticipant {
+      id
+      eventId
+      event {
+        id
+        name
+        type
+        venue
+        hostName
+        startDt
+        endDt
+        limit
+        description
+        createdAt
+        updatedAt
+      }
+      userName
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateComment(
+  $input: UpdateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  updateComment(input: $input, condition: $condition) {
+    id
+    eventParticipantId
+    eventParticipant {
+      id
+      eventId
+      event {
+        id
+        name
+        type
+        venue
+        hostName
+        startDt
+        endDt
+        limit
+        description
+        createdAt
+        updatedAt
+      }
+      userName
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteComment(
+  $input: DeleteCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  deleteComment(input: $input, condition: $condition) {
+    id
+    eventParticipantId
+    eventParticipant {
+      id
+      eventId
+      event {
+        id
+        name
+        type
+        venue
+        hostName
+        startDt
+        endDt
+        limit
+        description
+        createdAt
+        updatedAt
+      }
+      userName
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    updatedAt
+  }
+}

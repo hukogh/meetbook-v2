@@ -1,0 +1,29 @@
+type Event @model {
+  id: ID!
+  name: String!
+  type: String!
+  venue: String!
+  hostName: String!
+  startDt: AWSDateTime!
+  endDt: AWSDateTime!
+  limit: Int
+  description: String
+  participants: [EventParticipant] @connection(keyName: "byEvent", fields: ["id"])
+}
+
+type EventParticipant @model @key(name: "byEvent", fields: ["eventId", "createdAt"]) {
+  id: ID!
+  eventId: ID!
+  event: Event @connection(fields: ["eventId"])
+  userName: String!
+  comments: [Comment] @connection(keyName: "byEventParticipant", fields: ["id"])
+  createdAt: String!
+}
+
+type Comment @model @key(name: "byEventParticipant", fields: ["eventParticipantId", "createdAt"]) {
+  id: ID!
+  eventParticipantId: ID!
+  eventParticipant: EventParticipant @connection(fields: ["eventParticipantId"])
+  content: String!
+  createdAt: String!
+}

@@ -1,0 +1,173 @@
+# this is an auto generated file. This will be overwritten
+query GetEvent($id: ID!) {
+  getEvent(id: $id) {
+    id
+    name
+    type
+    venue
+    hostName
+    startDt
+    endDt
+    limit
+    description
+    participants {
+      items {
+        id
+        eventId
+        userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListEvents(
+  $filter: ModelEventFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetEventParticipant($id: ID!) {
+  getEventParticipant(id: $id) {
+    id
+    eventId
+    event {
+      id
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    userName
+    comments {
+      items {
+        id
+        eventParticipantId
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListEventParticipants(
+  $filter: ModelEventParticipantFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listEventParticipants(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      eventId
+      event {
+        id
+        name
+        type
+        venue
+        hostName
+        startDt
+        endDt
+        limit
+        description
+        createdAt
+        updatedAt
+      }
+      userName
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    eventParticipantId
+    eventParticipant {
+      id
+      eventId
+      event {
+        id
+        name
+        type
+        venue
+        hostName
+        startDt
+        endDt
+        limit
+        description
+        createdAt
+        updatedAt
+      }
+      userName
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    updatedAt
+  }
+}
+query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      eventParticipantId
+      eventParticipant {
+        id
+        eventId
+        userName
+        createdAt
+        updatedAt
+      }
+      content
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
