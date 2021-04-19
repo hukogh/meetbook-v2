@@ -20,6 +20,17 @@ subscription OnCreateEvent {
       }
       nextToken
     }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -40,6 +51,17 @@ subscription OnUpdateEvent {
         id
         eventId
         userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
         createdAt
         updatedAt
       }
@@ -70,6 +92,17 @@ subscription OnDeleteEvent {
       }
       nextToken
     }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -91,20 +124,13 @@ subscription OnCreateEventParticipant {
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -126,20 +152,13 @@ subscription OnUpdateEventParticipant {
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -161,20 +180,13 @@ subscription OnDeleteEventParticipant {
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -182,30 +194,27 @@ subscription OnDeleteEventParticipant {
 subscription OnCreateComment {
   onCreateComment {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
       id
-      eventId
-      event {
-        id
-        name
-        type
-        venue
-        hostName
-        startDt
-        endDt
-        limit
-        description
-        createdAt
-        updatedAt
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
       }
-      userName
       comments {
         nextToken
       }
       createdAt
       updatedAt
     }
+    userName
     content
     createdAt
     updatedAt
@@ -214,30 +223,27 @@ subscription OnCreateComment {
 subscription OnUpdateComment {
   onUpdateComment {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
       id
-      eventId
-      event {
-        id
-        name
-        type
-        venue
-        hostName
-        startDt
-        endDt
-        limit
-        description
-        createdAt
-        updatedAt
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
       }
-      userName
       comments {
         nextToken
       }
       createdAt
       updatedAt
     }
+    userName
     content
     createdAt
     updatedAt
@@ -246,30 +252,27 @@ subscription OnUpdateComment {
 subscription OnDeleteComment {
   onDeleteComment {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
       id
-      eventId
-      event {
-        id
-        name
-        type
-        venue
-        hostName
-        startDt
-        endDt
-        limit
-        description
-        createdAt
-        updatedAt
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
       }
-      userName
       comments {
         nextToken
       }
       createdAt
       updatedAt
     }
+    userName
     content
     createdAt
     updatedAt

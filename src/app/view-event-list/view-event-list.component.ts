@@ -13,11 +13,13 @@ import { LoginUserDataServiceService } from '../login-user-data-service.service'
 })
 export class ViewEventListComponent implements OnInit {
 
+  readonly SIGN_IN = 'signIn';
+  readonly SIGN_OUT = 'signOut';
+
   eventList: any[] = [];
   userName: string | null = '';
   viewEventList = false;
-  readonly SIGN_IN = 'signIn';
-  readonly SIGN_OUT = 'signOut';
+  eventParticipantCount = new Map();
 
   cols = [
     {field: 'name', header: 'Event Name'},
@@ -43,10 +45,21 @@ export class ViewEventListComponent implements OnInit {
     console.log('loading view-event-list');
 
      /* fetch events*/
-     this.api.ListEvents().then(event => {
-      if (event.items) {
-        this.eventList = event.items;
+     this.api.ListEvents().then(eventRes => {
+      if (eventRes.items) {
+        this.eventList = eventRes.items;
       }
+      this.api.ListEventParticipants().then(eventParticipantsRes => {
+        let eventParticipants: any[] = [];
+        if (eventParticipantsRes && eventParticipantsRes.items) {
+          eventParticipants = eventParticipantsRes.items;
+        }
+        this.eventList.forEach(event => {
+          const participantsCount = eventParticipants.filter(
+            participant => event['id'] === participant['eventId']).length;
+            this.eventParticipantCount.set(event['id'], participantsCount);
+        });
+      })
     });
 
     /* subscribe to new events being created */

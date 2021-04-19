@@ -20,6 +20,17 @@ query GetEvent($id: ID!) {
       }
       nextToken
     }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -41,6 +52,9 @@ query ListEvents(
       limit
       description
       participants {
+        nextToken
+      }
+      comments {
         nextToken
       }
       createdAt
@@ -66,20 +80,13 @@ query GetEventParticipant($id: ID!) {
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -107,9 +114,6 @@ query ListEventParticipants(
         updatedAt
       }
       userName
-      comments {
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -119,8 +123,39 @@ query ListEventParticipants(
 query GetComment($id: ID!) {
   getComment(id: $id) {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
+      id
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    userName
+    content
+    createdAt
+    updatedAt
+  }
+}
+query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
       id
       eventId
       event {
@@ -137,33 +172,6 @@ query GetComment($id: ID!) {
         updatedAt
       }
       userName
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    content
-    createdAt
-    updatedAt
-  }
-}
-query ListComments(
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      eventParticipantId
-      eventParticipant {
-        id
-        eventId
-        userName
-        createdAt
-        updatedAt
-      }
       content
       createdAt
       updatedAt

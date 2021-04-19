@@ -27,8 +27,8 @@
                     <tr [pSelectableRow]="rowData"(click)="navigateToViewEvent(rowData)">
                         <td *ngFor="let col of columns">
                             {{col.field === 'participantCount' ? 
-                            (rowData['participants'].items !== undefined ?
-                            rowData['participants'].items.length : '0') + (rowData['limit'] ? 
+                            (eventParticipantCount.get(rowData['id']) ? 
+                            eventParticipantCount.get(rowData['id']) : '0') + (rowData['limit'] ? 
                             '/' + rowData['limit']  : '') : 
                             rowData[col.field]}}
                         </td>

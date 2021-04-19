@@ -23,6 +23,17 @@ mutation CreateEvent(
       }
       nextToken
     }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -46,6 +57,17 @@ mutation UpdateEvent(
         id
         eventId
         userName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
         createdAt
         updatedAt
       }
@@ -79,6 +101,17 @@ mutation DeleteEvent(
       }
       nextToken
     }
+    comments {
+      items {
+        id
+        eventId
+        userName
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -103,20 +136,13 @@ mutation CreateEventParticipant(
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -141,20 +167,13 @@ mutation UpdateEventParticipant(
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -179,20 +198,13 @@ mutation DeleteEventParticipant(
       participants {
         nextToken
       }
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
     userName
-    comments {
-      items {
-        id
-        eventParticipantId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     createdAt
     updatedAt
   }
@@ -203,30 +215,27 @@ mutation CreateComment(
 ) {
   createComment(input: $input, condition: $condition) {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
       id
-      eventId
-      event {
-        id
-        name
-        type
-        venue
-        hostName
-        startDt
-        endDt
-        limit
-        description
-        createdAt
-        updatedAt
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
       }
-      userName
       comments {
         nextToken
       }
       createdAt
       updatedAt
     }
+    userName
     content
     createdAt
     updatedAt
@@ -238,30 +247,27 @@ mutation UpdateComment(
 ) {
   updateComment(input: $input, condition: $condition) {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
       id
-      eventId
-      event {
-        id
-        name
-        type
-        venue
-        hostName
-        startDt
-        endDt
-        limit
-        description
-        createdAt
-        updatedAt
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
       }
-      userName
       comments {
         nextToken
       }
       createdAt
       updatedAt
     }
+    userName
     content
     createdAt
     updatedAt
@@ -273,30 +279,27 @@ mutation DeleteComment(
 ) {
   deleteComment(input: $input, condition: $condition) {
     id
-    eventParticipantId
-    eventParticipant {
+    eventId
+    event {
       id
-      eventId
-      event {
-        id
-        name
-        type
-        venue
-        hostName
-        startDt
-        endDt
-        limit
-        description
-        createdAt
-        updatedAt
+      name
+      type
+      venue
+      hostName
+      startDt
+      endDt
+      limit
+      description
+      participants {
+        nextToken
       }
-      userName
       comments {
         nextToken
       }
       createdAt
       updatedAt
     }
+    userName
     content
     createdAt
     updatedAt

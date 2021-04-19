@@ -98,6 +98,7 @@ export type Event = {
   limit?: number | null;
   description?: string | null;
   participants?: ModelEventParticipantConnection;
+  comments?: ModelCommentConnection;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -114,7 +115,6 @@ export type EventParticipant = {
   eventId?: string;
   event?: Event;
   userName?: string;
-  comments?: ModelCommentConnection;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -128,8 +128,9 @@ export type ModelCommentConnection = {
 export type Comment = {
   __typename: "Comment";
   id?: string;
-  eventParticipantId?: string;
-  eventParticipant?: EventParticipant;
+  eventId?: string;
+  event?: Event;
+  userName?: string;
   content?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -196,13 +197,15 @@ export type DeleteEventParticipantInput = {
 
 export type CreateCommentInput = {
   id?: string | null;
-  eventParticipantId: string;
+  eventId: string;
+  userName: string;
   content: string;
   createdAt?: string | null;
 };
 
 export type ModelCommentConditionInput = {
-  eventParticipantId?: ModelIDInput | null;
+  eventId?: ModelIDInput | null;
+  userName?: ModelStringInput | null;
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   and?: Array<ModelCommentConditionInput | null> | null;
@@ -212,7 +215,8 @@ export type ModelCommentConditionInput = {
 
 export type UpdateCommentInput = {
   id: string;
-  eventParticipantId?: string | null;
+  eventId?: string | null;
+  userName?: string | null;
   content?: string | null;
   createdAt?: string | null;
 };
@@ -254,7 +258,8 @@ export type ModelEventParticipantFilterInput = {
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null;
-  eventParticipantId?: ModelIDInput | null;
+  eventId?: ModelIDInput | null;
+  userName?: ModelStringInput | null;
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   and?: Array<ModelCommentFilterInput | null> | null;
@@ -280,6 +285,19 @@ export type CreateEventMutation = {
       id: string;
       eventId: string;
       userName: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -312,6 +330,19 @@ export type UpdateEventMutation = {
     } | null> | null;
     nextToken?: string | null;
   } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -334,6 +365,19 @@ export type DeleteEventMutation = {
       id: string;
       eventId: string;
       userName: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -362,22 +406,14 @@ export type CreateEventParticipantMutation = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
   userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -401,22 +437,14 @@ export type UpdateEventParticipantMutation = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
   userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -440,49 +468,6 @@ export type DeleteEventParticipantMutation = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateCommentMutation = {
-  __typename: "Comment";
-  id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
-    id: string;
-    eventId: string;
-    event?: {
-      __typename: "Event";
-      id: string;
-      name: string;
-      type: string;
-      venue: string;
-      hostName: string;
-      startDt: string;
-      endDt: string;
-      limit?: number | null;
-      description?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    userName: string;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -490,6 +475,38 @@ export type CreateCommentMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  userName: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateCommentMutation = {
+  __typename: "Comment";
+  id: string;
+  eventId: string;
+  event?: {
+    __typename: "Event";
+    id: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  userName: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -498,26 +515,22 @@ export type CreateCommentMutation = {
 export type UpdateCommentMutation = {
   __typename: "Comment";
   id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
+  eventId: string;
+  event?: {
+    __typename: "Event";
     id: string;
-    eventId: string;
-    event?: {
-      __typename: "Event";
-      id: string;
-      name: string;
-      type: string;
-      venue: string;
-      hostName: string;
-      startDt: string;
-      endDt: string;
-      limit?: number | null;
-      description?: string | null;
-      createdAt: string;
-      updatedAt: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
     } | null;
-    userName: string;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -525,6 +538,7 @@ export type UpdateCommentMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  userName: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -533,26 +547,22 @@ export type UpdateCommentMutation = {
 export type DeleteCommentMutation = {
   __typename: "Comment";
   id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
+  eventId: string;
+  event?: {
+    __typename: "Event";
     id: string;
-    eventId: string;
-    event?: {
-      __typename: "Event";
-      id: string;
-      name: string;
-      type: string;
-      venue: string;
-      hostName: string;
-      startDt: string;
-      endDt: string;
-      limit?: number | null;
-      description?: string | null;
-      createdAt: string;
-      updatedAt: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
     } | null;
-    userName: string;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -560,6 +570,7 @@ export type DeleteCommentMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  userName: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -588,6 +599,19 @@ export type GetEventQuery = {
     } | null> | null;
     nextToken?: string | null;
   } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -607,6 +631,10 @@ export type ListEventsQuery = {
     description?: string | null;
     participants?: {
       __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -634,22 +662,14 @@ export type GetEventParticipantQuery = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
   userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -675,10 +695,6 @@ export type ListEventParticipantsQuery = {
       updatedAt: string;
     } | null;
     userName: string;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
@@ -688,9 +704,39 @@ export type ListEventParticipantsQuery = {
 export type GetCommentQuery = {
   __typename: "Comment";
   id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
+  eventId: string;
+  event?: {
+    __typename: "Event";
+    id: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  userName: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListCommentsQuery = {
+  __typename: "ModelCommentConnection";
+  items?: Array<{
+    __typename: "Comment";
     id: string;
     eventId: string;
     event?: {
@@ -708,32 +754,6 @@ export type GetCommentQuery = {
       updatedAt: string;
     } | null;
     userName: string;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListCommentsQuery = {
-  __typename: "ModelCommentConnection";
-  items?: Array<{
-    __typename: "Comment";
-    id: string;
-    eventParticipantId: string;
-    eventParticipant?: {
-      __typename: "EventParticipant";
-      id: string;
-      eventId: string;
-      userName: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
     content: string;
     createdAt: string;
     updatedAt: string;
@@ -759,6 +779,19 @@ export type OnCreateEventSubscription = {
       id: string;
       eventId: string;
       userName: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -791,6 +824,19 @@ export type OnUpdateEventSubscription = {
     } | null> | null;
     nextToken?: string | null;
   } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -813,6 +859,19 @@ export type OnDeleteEventSubscription = {
       id: string;
       eventId: string;
       userName: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      eventId: string;
+      userName: string;
+      content: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -841,22 +900,14 @@ export type OnCreateEventParticipantSubscription = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
   userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -880,22 +931,14 @@ export type OnUpdateEventParticipantSubscription = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
   userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -919,49 +962,6 @@ export type OnDeleteEventParticipantSubscription = {
       __typename: "ModelEventParticipantConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  userName: string;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      eventParticipantId: string;
-      content: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateCommentSubscription = {
-  __typename: "Comment";
-  id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
-    id: string;
-    eventId: string;
-    event?: {
-      __typename: "Event";
-      id: string;
-      name: string;
-      type: string;
-      venue: string;
-      hostName: string;
-      startDt: string;
-      endDt: string;
-      limit?: number | null;
-      description?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    userName: string;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -969,6 +969,38 @@ export type OnCreateCommentSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  userName: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateCommentSubscription = {
+  __typename: "Comment";
+  id: string;
+  eventId: string;
+  event?: {
+    __typename: "Event";
+    id: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  userName: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -977,26 +1009,22 @@ export type OnCreateCommentSubscription = {
 export type OnUpdateCommentSubscription = {
   __typename: "Comment";
   id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
+  eventId: string;
+  event?: {
+    __typename: "Event";
     id: string;
-    eventId: string;
-    event?: {
-      __typename: "Event";
-      id: string;
-      name: string;
-      type: string;
-      venue: string;
-      hostName: string;
-      startDt: string;
-      endDt: string;
-      limit?: number | null;
-      description?: string | null;
-      createdAt: string;
-      updatedAt: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
     } | null;
-    userName: string;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1004,6 +1032,7 @@ export type OnUpdateCommentSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  userName: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -1012,26 +1041,22 @@ export type OnUpdateCommentSubscription = {
 export type OnDeleteCommentSubscription = {
   __typename: "Comment";
   id: string;
-  eventParticipantId: string;
-  eventParticipant?: {
-    __typename: "EventParticipant";
+  eventId: string;
+  event?: {
+    __typename: "Event";
     id: string;
-    eventId: string;
-    event?: {
-      __typename: "Event";
-      id: string;
-      name: string;
-      type: string;
-      venue: string;
-      hostName: string;
-      startDt: string;
-      endDt: string;
-      limit?: number | null;
-      description?: string | null;
-      createdAt: string;
-      updatedAt: string;
+    name: string;
+    type: string;
+    venue: string;
+    hostName: string;
+    startDt: string;
+    endDt: string;
+    limit?: number | null;
+    description?: string | null;
+    participants?: {
+      __typename: "ModelEventParticipantConnection";
+      nextToken?: string | null;
     } | null;
-    userName: string;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1039,6 +1064,7 @@ export type OnDeleteCommentSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  userName: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -1071,6 +1097,19 @@ export class APIService {
               id
               eventId
               userName
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
               createdAt
               updatedAt
             }
@@ -1119,6 +1158,19 @@ export class APIService {
             }
             nextToken
           }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -1157,6 +1209,19 @@ export class APIService {
               id
               eventId
               userName
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
               createdAt
               updatedAt
             }
@@ -1201,22 +1266,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -1256,22 +1313,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -1311,22 +1360,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -1350,26 +1391,22 @@ export class APIService {
         createComment(input: $input, condition: $condition) {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -1377,6 +1414,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt
@@ -1401,26 +1439,22 @@ export class APIService {
         updateComment(input: $input, condition: $condition) {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -1428,6 +1462,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt
@@ -1452,26 +1487,22 @@ export class APIService {
         deleteComment(input: $input, condition: $condition) {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -1479,6 +1510,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt
@@ -1520,6 +1552,19 @@ export class APIService {
             }
             nextToken
           }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -1552,6 +1597,10 @@ export class APIService {
             limit
             description
             participants {
+              __typename
+              nextToken
+            }
+            comments {
               __typename
               nextToken
             }
@@ -1597,22 +1646,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -1652,10 +1693,6 @@ export class APIService {
               updatedAt
             }
             userName
-            comments {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
           }
@@ -1682,26 +1719,22 @@ export class APIService {
         getComment(id: $id) {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -1709,6 +1742,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt
@@ -1733,15 +1767,22 @@ export class APIService {
           items {
             __typename
             id
-            eventParticipantId
-            eventParticipant {
+            eventId
+            event {
               __typename
               id
-              eventId
-              userName
+              name
+              type
+              venue
+              hostName
+              startDt
+              endDt
+              limit
+              description
               createdAt
               updatedAt
             }
+            userName
             content
             createdAt
             updatedAt
@@ -1792,6 +1833,19 @@ export class APIService {
             }
             nextToken
           }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -1822,6 +1876,19 @@ export class APIService {
               id
               eventId
               userName
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
               createdAt
               updatedAt
             }
@@ -1862,6 +1929,19 @@ export class APIService {
             }
             nextToken
           }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              eventId
+              userName
+              content
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -1893,22 +1973,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -1940,22 +2012,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -1987,22 +2051,14 @@ export class APIService {
               __typename
               nextToken
             }
+            comments {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
           userName
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              eventParticipantId
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
@@ -2018,26 +2074,22 @@ export class APIService {
         onCreateComment {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -2045,6 +2097,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt
@@ -2061,26 +2114,22 @@ export class APIService {
         onUpdateComment {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -2088,6 +2137,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt
@@ -2104,26 +2154,22 @@ export class APIService {
         onDeleteComment {
           __typename
           id
-          eventParticipantId
-          eventParticipant {
+          eventId
+          event {
             __typename
             id
-            eventId
-            event {
+            name
+            type
+            venue
+            hostName
+            startDt
+            endDt
+            limit
+            description
+            participants {
               __typename
-              id
-              name
-              type
-              venue
-              hostName
-              startDt
-              endDt
-              limit
-              description
-              createdAt
-              updatedAt
+              nextToken
             }
-            userName
             comments {
               __typename
               nextToken
@@ -2131,6 +2177,7 @@ export class APIService {
             createdAt
             updatedAt
           }
+          userName
           content
           createdAt
           updatedAt

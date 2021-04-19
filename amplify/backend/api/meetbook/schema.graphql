@@ -9,6 +9,7 @@ type Event @model {
   limit: Int
   description: String
   participants: [EventParticipant] @connection(keyName: "byEvent", fields: ["id"])
+  comments: [Comment] @connection(keyName: "byEvent", fields: ["id"])
 }
 
 type EventParticipant @model @key(name: "byEvent", fields: ["eventId", "createdAt"]) {
@@ -16,14 +17,14 @@ type EventParticipant @model @key(name: "byEvent", fields: ["eventId", "createdA
   eventId: ID!
   event: Event @connection(fields: ["eventId"])
   userName: String!
-  comments: [Comment] @connection(keyName: "byEventParticipant", fields: ["id"])
   createdAt: String!
 }
 
-type Comment @model @key(name: "byEventParticipant", fields: ["eventParticipantId", "createdAt"]) {
+type Comment @model @key(name: "byEvent", fields: ["eventId", "createdAt"]) {
   id: ID!
-  eventParticipantId: ID!
-  eventParticipant: EventParticipant @connection(fields: ["eventParticipantId"])
+  eventId: ID!
+  event: Event @connection(fields: ["eventId"])
+  userName: String!
   content: String!
   createdAt: String!
 }

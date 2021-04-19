@@ -1,7 +1,16 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-9 col-ms-9 col-md-9 col-lg-9">
-            <p-table [columns]="colsComments" [value]="commentList">
+        <div class="col-xs-10 col-ms-10 col-md-10 col-lg-10">
+            <ul><b>Event Name: </b>{{ eventDataService.eventData['name'] }}</ul>
+            <ul><b>Type: </b>{{ eventDataService.eventData['type'] }}</ul>
+            <ul><b>Venue: </b>{{ eventDataService.eventData['venue'] }}</ul>
+            <ul><b>Host: </b>{{ eventDataService.eventData['hostName'] }}</ul>
+            <ul><b>Start Date: </b>{{ eventDataService.eventData['startDt'] }}</ul>
+            <ul><b>End Date: </b>{{ eventDataService.eventData['endDt'] }}</ul>
+            <ul><b>Description: </b>{{ eventDataService.eventData['description'] }}</ul>
+        </div>
+        <div class="col-xs-2 col-ms-2 col-md-2 col-lg-2" style="border: 1px solid black;">
+            <p-table [columns]="colsParticipants" [value]="participantList">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th *ngFor="let col of columns">
@@ -18,8 +27,10 @@
                 </ng-template>
             </p-table>
         </div>
-        <div class="col-xs-3 col-ms-3 col-md-3 col-lg-3">
-            <p-table [columns]="colsParticipants" [value]="participantList">
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-ms-12 col-md-12 col-lg-12">
+            <p-table [columns]="colsComments" [value]="commentList">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th *ngFor="let col of columns">
@@ -42,7 +53,7 @@
             <form class="width: 100%;">             
                 <mat-form-field class="width: 100%;">
                     <mat-label>Leave a comment</mat-label>
-                    <textarea matInput placeholder="..." 
+                    <textarea matInput placeholder="Type something..." 
                     [(ngModel)]="content" [ngModelOptions]="{standalone: true}"></textarea>
                 </mat-form-field>
                 <button (click)="sendComment()">Send</button>
