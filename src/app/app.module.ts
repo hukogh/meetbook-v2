@@ -10,7 +10,7 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 /* new form imports */
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {TableModule} from 'primeng/table'
+import { TableModule } from 'primeng/table'
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";

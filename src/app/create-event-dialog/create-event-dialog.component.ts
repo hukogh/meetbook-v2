@@ -1,6 +1,6 @@
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 import { APIService } from '../API.service';
@@ -26,6 +26,7 @@ export class CreateEventDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const dateTime = new Date();
     this.createForm = this.fb.group({
       'name': ['', Validators.required],
       'type': ['', Validators.required],
@@ -44,6 +45,14 @@ export class CreateEventDialogComponent implements OnInit {
   }
 
   public onCreate() {
+    const startDt = this.createForm.get('startDt');
+    const endDt = this.createForm.get('endDt');
+    if (startDt && endDt) {
+      this.createForm.patchValue({
+        startDt: startDt.value + ':00.000Z',
+        endDt: endDt.value + ':00.000Z'
+      });
+    }
     this.api.CreateEvent(this.createForm.value).then(event => {
       console.log('item created!');
       this.dialogRef.close();

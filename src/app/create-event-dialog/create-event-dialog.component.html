@@ -2,31 +2,35 @@
 
 <mat-dialog-content [formGroup]="createForm">
   
-    <mat-form-field>
+    <mat-form-field [style.width.px]="300">
         <input matInput placeholder="Event Name" formControlName="name">    
     </mat-form-field><br>
 
-    <mat-form-field>
+    <mat-form-field [style.width.px]="300">
         <input matInput placeholder="Event Type" formControlName="type">    
     </mat-form-field><br>
 
-    <mat-form-field>
+    <mat-form-field [style.width.px]="300">
         <input matInput placeholder="Venue" formControlName="venue">    
     </mat-form-field><br>
 
-    <mat-form-field>
-        <input matInput placeholder="Start Date" formControlName="startDt">    
+    <mat-form-field [style.width.px]="300">
+        <mat-label>Start Date</mat-label>
+        <input type="datetime-local" matInput
+        formControlName="startDt"> 
     </mat-form-field><br>
 
-    <mat-form-field>
-        <input matInput placeholder="End Date" formControlName="endDt">    
+    <mat-form-field [style.width.px]="300">
+        <mat-label>End Date</mat-label>
+        <input type="datetime-local" matInput
+        formControlName="endDt">
     </mat-form-field><br>
 
-    <mat-form-field>
+    <mat-form-field [style.width.px]="300">
         <input matInput placeholder="Participant Limit" formControlName="limit">    
     </mat-form-field><br>
 
-    <mat-form-field>
+    <mat-form-field [style.width.px]="300">
         <input matInput placeholder="Description" formControlName="description">    
     </mat-form-field>
  

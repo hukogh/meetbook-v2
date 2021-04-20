@@ -5,8 +5,13 @@
             <ul><b>Type: </b>{{ eventDataService.eventData['type'] }}</ul>
             <ul><b>Venue: </b>{{ eventDataService.eventData['venue'] }}</ul>
             <ul><b>Host: </b>{{ eventDataService.eventData['hostName'] }}</ul>
-            <ul><b>Start Date: </b>{{ eventDataService.eventData['startDt'] }}</ul>
-            <ul><b>End Date: </b>{{ eventDataService.eventData['endDt'] }}</ul>
+
+            <ul><b>Start Date: </b>{{ eventDataService.eventData['startDt'].substring(0, 10) + 
+                ' [' +  eventDataService.eventData['startDt'].substring(11, 16) + ']'}}</ul>
+
+            <ul><b>End Date: </b>{{ eventDataService.eventData['endDt'].substring(0, 10) + 
+                ' [' +  eventDataService.eventData['endDt'].substring(11, 16) + ']' }}</ul>
+                
             <ul><b>Description: </b>{{ eventDataService.eventData['description'] }}</ul>
         </div>
         <div class="col-xs-2 col-ms-2 col-md-2 col-lg-2" style="border: 1px solid black;">

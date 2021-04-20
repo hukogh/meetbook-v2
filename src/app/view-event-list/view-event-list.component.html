@@ -10,7 +10,8 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-ms-12 col-md-12 col-lg-12">
-            <p-table [columns]="cols" [value]="eventList" [selectionMode]="'single'">
+            <p-table [columns]="cols" [value]="eventList" [selectionMode]="'single'"
+                [rowHover]="true" class="table-hover">
                 <ng-template pTemplate="caption">
                 <div style="text-align: center;">
                     <h2>Explore Events</h2><br>
@@ -30,6 +31,12 @@
                             (eventParticipantCount.get(rowData['id']) ? 
                             eventParticipantCount.get(rowData['id']) : '0') + (rowData['limit'] ? 
                             '/' + rowData['limit']  : '') : 
+                            
+                            col.field === 'startDt' ? 
+                            rowData['startDt'].substring(0, 10) + ' [' + rowData['startDt'].substring(11, 16) + ']' : 
+                            
+                            col.field === 'endDt' ? 
+                            rowData['endDt'].substring(0, 10) + ' [' + rowData['endDt'].substring(11, 16) + ']' :
                             rowData[col.field]}}
                         </td>
                     </tr>
