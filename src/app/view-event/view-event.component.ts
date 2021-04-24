@@ -116,7 +116,6 @@ export class ViewEventComponent implements OnInit {
       'eventId': [this.eventDataService.eventData.id, Validators.required],
       'userName': [this.loginUserDataService.userName, Validators.required],
     });
-
     this.api.CreateEventParticipant(createForm.value).then(event => {
       console.log('eventParticipant created');
     })
@@ -124,7 +123,6 @@ export class ViewEventComponent implements OnInit {
       console.log('error creating eventParticipant...', e);
     });
   }
-
   back() {
     this.router.navigate(['view-event-list']);
   }

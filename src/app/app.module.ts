@@ -17,13 +17,15 @@ import { MatInputModule } from "@angular/material/input";
 import { CreateEventDialogComponent } from './create-event-dialog/create-event-dialog.component';
 import { ViewEventListComponent } from './view-event-list/view-event-list.component';
 import { ViewEventComponent } from './view-event/view-event.component';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateEventDialogComponent,
     ViewEventListComponent,
-    ViewEventComponent
+    ViewEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { ViewEventComponent } from './view-event/view-event.component';
     TableModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

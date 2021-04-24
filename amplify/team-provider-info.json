@@ -1,26 +1,26 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-meetbook-dev-185505-authRole",
-            "UnauthRoleArn": "arn:aws:iam::513256167019:role/amplify-meetbook-dev-185505-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::513256167019:role/amplify-meetbook-dev-185505-authRole",
-            "Region": "ap-southeast-1",
-            "DeploymentBucketName": "amplify-meetbook-dev-185505-deployment",
-            "UnauthRoleName": "amplify-meetbook-dev-185505-unauthRole",
-            "StackName": "amplify-meetbook-dev-185505",
-            "StackId": "arn:aws:cloudformation:ap-southeast-1:513256167019:stack/amplify-meetbook-dev-185505/9203fad0-a034-11eb-9e30-02ab63576a78",
-            "AmplifyAppId": "dwznewyi73ywy"
-        },
-        "categories": {
-            "auth": {
-                "meetbook5ea829ac": {}
-            },
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "dwznewyi73ywy",
-                    "type": "manual"
-                }
-            }
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-meetbook-dev-185505-authRole",
+      "UnauthRoleArn": "arn:aws:iam::513256167019:role/amplify-meetbook-dev-185505-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::513256167019:role/amplify-meetbook-dev-185505-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-meetbook-dev-185505-deployment",
+      "UnauthRoleName": "amplify-meetbook-dev-185505-unauthRole",
+      "StackName": "amplify-meetbook-dev-185505",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:513256167019:stack/amplify-meetbook-dev-185505/9203fad0-a034-11eb-9e30-02ab63576a78",
+      "AmplifyAppId": "dwznewyi73ywy"
+    },
+    "categories": {
+      "auth": {
+        "meetbook5ea829ac": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dwznewyi73ywy",
+          "type": "manual"
         }
+      }
     }
+  }
 }

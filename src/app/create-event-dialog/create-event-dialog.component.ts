@@ -8,11 +8,22 @@ import { APIService } from '../API.service';
 @Component({
   selector: 'app-create-event-dialog',
   templateUrl: './create-event-dialog.component.html',
-  styleUrls: ['./create-event-dialog.component.scss']
+  styleUrls: ['./create-event-dialog.component.scss'],
+  
 })
 export class CreateEventDialogComponent implements OnInit {
 
   public createForm: FormGroup = this.fb.group({});
+
+  eventType:any = [
+    { value: 'Sports', text: 'Sports' },
+    { value: 'Computer Games', text: 'Computer Games' },
+    { value: 'Study', text: 'Study' },
+    { value: 'Religious', text: 'Religious' },
+    { value: 'Gym', text: 'Gym' },
+    { value: 'Dance', text: 'Dance' },
+    { value: 'Art', text: 'Art' }
+  ];
 
   hostName = '';
 
