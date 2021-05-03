@@ -1,0 +1,3 @@
+# pack-refs with: peeled fully-peeled sorted 
+df80512c21700652480fe31db159a07a8ceb322d refs/heads/Test
+df80512c21700652480fe31db159a07a8ceb322d refs/heads/master
